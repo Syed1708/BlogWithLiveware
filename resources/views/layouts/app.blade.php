@@ -21,7 +21,11 @@
         <x-banner />
            
         @include('layouts.parts.header')
-        
+        {{-- create a component for hero or derective @yield() --}}
+        {{-- @include('layouts.parts.hero') --}}
+
+        @yield('hero')
+
         <main class="container mx-auto px-5 flex flex-grow">
          {{ $slot }}
         </main>

@@ -21,7 +21,7 @@
         <x-banner />
            
         @include('layouts.parts.header')
-        {{-- create a component for hero or derective @yield() --}}
+        
         {{-- @include('layouts.parts.hero') --}}
 
         @yield('hero')

@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+{{-- <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -216,4 +216,40 @@
             </div>
         </div>
     </div>
+</nav> --}}
+
+<nav class="flex items-center justify-between py-3 px-6 border-b border-gray-100">
+    <div id="nav-left" class="flex items-center">
+        <div class="text-gray-800 font-semibold">
+            <span class="text-yellow-500 text-xl">&lt;SN&gt;</span> Code
+        </div>
+        <div class="top-menu ml-10">
+            <div>
+               
+
+                <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
+                    {{ __('Home') }}
+                </x-nav-link>
+
+                <x-nav-link href="{{ route('blog.index') }}" :active="request()->routeIs('blog.index')">
+                    {{ __('Blog') }}
+                </x-nav-link>
+
+            </div>
+        </div>
+    </div>
+    <div id="nav-right" class="flex items-center md:space-x-6">
+        <div class="flex space-x-5">
+            
+            @auth
+            @include('layouts.parts.admin_right')
+            @else
+            @include('layouts.parts.guest_right')
+
+            @endauth
+                
+
+        </div>
+    </div>
+
 </nav>

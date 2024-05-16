@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -10,8 +11,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Post extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
-
+    protected $fillable = [
+        'user_id',
+        'title',
+        'slug',
+        'image',
+        'content',
+        'published_at',
+        'featured',
+    ];
     // create scope for Published
     public function scopePublished($query){
 
@@ -32,6 +42,11 @@ class Post extends Model
         return $this->belongsTo(User::class,'user_id');
     }
 
+    public function categories(){
+
+        return $this->belongsToMany(Category::class);
+    }
+
     public function postExcerpt(){
 
         return Str::limit(strip_tags($this->content), 150);
@@ -44,4 +59,6 @@ class Post extends Model
         $min = round($wordCount / 250); //250 words speed par min as a humain
         return ($min < 1) ? 1 : $min;
     }
+
+    
 }

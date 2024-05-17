@@ -18,5 +18,9 @@ class Category extends Model
         'hover_color',
     ];
 
+    public function posts(){
+        return $this->belongsToMany(Post::class);
+    }
+
 
 }

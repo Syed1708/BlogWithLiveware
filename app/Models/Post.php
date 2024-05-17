@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Storage;
 
 class Post extends Model
 {
@@ -33,7 +34,13 @@ class Post extends Model
 
         $query->where('featured', true);
     }
+    // withCategory Posts
+    public function scopeWithCategory($query, string $category){
 
+        $query->whereHas('categories', function($query) use($category) {
+            $query->where('slug', $category);
+        });
+    }
     protected $casts = [
         'published_at' => 'datetime',
     ];
@@ -59,6 +66,18 @@ class Post extends Model
         $min = round($wordCount / 250); //250 words speed par min as a humain
         return ($min < 1) ? 1 : $min;
     }
+
+    // load http link image also if user upload a image then show it 
+
+    public function getThumbnail(){
+
+        $is_image = str_contains($this->image, 'http');
+
+        return ($is_image) ? $this->image : Storage::disk('public')->url($this->image);
+    }
+
+
+
 
     
 }
